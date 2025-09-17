@@ -1,0 +1,20 @@
+.boton-hover{
+    background-color: white;
+    color: #333;
+    border: 1px soli #999;
+    padding: 6px 14px;
+    margin: 5px 5px 0 0;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.boton-hover:hover{
+    background-color: #f0f0f0;
+}
+
+.boton-hover.activo{
+    background-color: #d0e8ff;
+    border-color: #007acc;
+    font-weight: 500;
+}

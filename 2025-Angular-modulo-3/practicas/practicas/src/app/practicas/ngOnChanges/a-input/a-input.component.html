@@ -1,0 +1,7 @@
+@for(item of users; track $index){
+<button class="boton-hover" [class.activo]="item===usuarioSeleccionado" (click)="seleccionarUsuario(item)" >
+    ver {{item.name}}
+</button>
+}
+<hr>
+<app-user-details [user]="usuarioSeleccionado"></app-user-details>

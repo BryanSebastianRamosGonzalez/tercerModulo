@@ -1,0 +1,22 @@
+.titulo{
+    font-size: 24px;
+    color: aqua;
+    margin-bottom: 10px;
+    border-bottom: 2px solid yellow;
+    display: inline-block;
+    padding: 4px;
+}
+
+.tarjeta{
+    background-color: antiquewhite;
+    padding: 16px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6 px rgba(0, 0, 0, 0.1);
+    max-width: 300px;
+}
+
+.tarjeta p{
+    margin: 8px 0;
+    font-size: 16px;
+    color: #333;
+}
