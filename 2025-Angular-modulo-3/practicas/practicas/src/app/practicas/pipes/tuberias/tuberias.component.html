@@ -1,0 +1,25 @@
+<h2>Pipes predeterminados</h2>
+<h3>Fechas formateadas</h3>
+<ul>
+    @for(item of fechas; track $index){
+        <li>{{item | date: 'fullDate'}}</li>
+    }
+</ul>
+<h3>Sueldos formateados</h3>
+<ul>
+    @for(item of sueldos; track $index){
+        <li>{{item | number: '1.2-2'}}</li>
+    }
+</ul>
+<hr>
+<h2>Probando pipe personalizado contraseña</h2>
+<p>{{contrasena | ocultarInicio:6 }}</p>
+<p>{{"458" | ocultarInicio:3}}</p>
+
+<hr>
+
+<h2>Probando pipe personalizado nombres</h2>
+
+@for(item of nombresCompletos; track $index) {
+    <p> {{item}}=> {{item | iniciales }}</p>
+}
