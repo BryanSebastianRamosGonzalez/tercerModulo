@@ -33,24 +33,31 @@ export class ProductService {
       .pipe(catchError((error) => throwError(() => new Error(error))));
   }
 
-  searchProducts(searchConfig:filters):Observable<Product[]>{
-    
+  searchProducts(searchConfig: filters): Observable<Product[]> {
+  const filters: any = { q: searchConfig.q };
 
-    let filters:filters ={
-      q:searchConfig.q
-    }
-    if (searchConfig.minPrice) {
-      filters.minPrice = searchConfig.minPrice;
-    }
-    if (searchConfig.maxPrice) {
-      filters.maxPrice = searchConfig.maxPrice;
-    }
-    const params = new HttpParams({fromObject: filters});
-    return this.httpClient.get<ProductResponse>(`${this.baseUrl}/search`, {params}).pipe(
-      map(response=>{
-        return response.products;
-      })
-    )
-
+  if (searchConfig.minPrice !== undefined && searchConfig.minPrice !== null) {
+    filters.minPrice = searchConfig.minPrice;
   }
+  if (searchConfig.maxPrice !== undefined && searchConfig.maxPrice !== null) {
+    filters.maxPrice = searchConfig.maxPrice;
+  }
+
+  const params = new HttpParams({ fromObject: filters });
+
+  return this.httpClient.get<ProductResponse>(`${this.baseUrl}/search`, { params }).pipe(
+    map(response => response.products)
+  );
+}
+getCheapestProducts(limit: number = 3) {
+  return this.httpClient
+    .get<ProductResponse>(`${this.baseUrl}`, {
+      params: { limit, sort: 'price', order: 'asc' }
+    })
+    .pipe(
+      map(res => res.products),
+      catchError(err => throwError(() => new Error(err)))
+    );
+}
+
 }

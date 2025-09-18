@@ -10,6 +10,7 @@ import { RouterModule } from '@angular/router';
   styleUrl: './reto1.component.css'
 })
 export class Reto1Component {
-  indicators:boolean = false;
-  autoPlay: boolean = true;
+  indicators = true;  // controla si se muestran los indicadores
+  autoPlay = true;    // controla si el carousel se reproduce automáticamente
+  products: any[] = [];
 }

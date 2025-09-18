@@ -1,70 +1,82 @@
+<!-- CARRUSEL PRINCIPAL -->
 <div
   class="relative w-full max-w-6xl mx-auto bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 mb-8"
 >
   <div class="relative h-64 md:h-80 lg:h-96 overflow-hidden">
     @for(image of images; track $index){
-    <div
-      class="absolute inset-0 transition-opacity duration-500 ease-in-out"
-      [class.opacity-100]="$index === currentIndex"
-      [class.opacity-0]="$index !== currentIndex"
-    >
-      @if (image.loading) {
-      <div class="w-full h-full bg-gray-100 flex items-center justify-center">
-        <div
-          class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"
-        ></div>
-      </div>
-      } @if (image.loaded) {
-      <img
-        [src]="image.src"
-        [alt]="image.alt"
-        class="w-full h-full object-cover"
-      />
-      } @if(!image.loaded && !image.loading){
       <div
-        class="w-full h-full bg-gray-100 flex items-center justify-center"
-      ></div>
-      }
-    </div>
-    } @if (showControls) {
-    <button
-      (click)="prevImage()"
-      class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-700 hover:text-gray-700 rounded-full shadow-md transition-all duration-200 hover:scale-110"
-    >
-      <svg
-        class="w-5 h-5"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
+        class="absolute inset-0 transition-opacity duration-500 ease-in-out cursor-pointer"
+        [class.opacity-100]="$index === currentIndex"
+        [class.opacity-0]="$index !== currentIndex"
       >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M15 19l-7-7 7-7"
-        ></path>
-      </svg>
-    </button>
+        @if (image.loading) {
+          <div class="w-full h-full bg-gray-100 flex items-center justify-center">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+          </div>
+        } @if (image.loaded) {
+          <img [src]="products[$index]?.imagesUrl[0] || 'assets/placeholder.png'" [alt]="image.alt" class="w-full h-full object-cover"/>
+        } @if(!image.loaded && !image.loading){
+          <div class="w-full h-full bg-gray-100 flex items-center justify-center"></div>
+        }
 
-    <button
-      (click)="nextImage()"
-      class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-700 hover:text-gray-700 rounded-full shadow-md transition-all duration-200 hover:scale-110"
-    >
-      <svg
-        class="w-5 h-5"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M9 5l7 7-7 7"
-        ></path>
-      </svg>
-    </button>
-
+        <!-- Overlay con información -->
+        <div class="absolute bottom-0 left-0 right-0 bg-black/50 text-white p-4">
+          @if(products[$index]?.offer > 0){
+            <span class="bg-red-500 px-2 py-1 rounded text-sm font-bold">{{ products[$index].offer }}% OFF</span>
+          }
+          <h3 class="text-lg font-semibold mt-1">{{ image.alt }}</h3>
+          <p class="text-sm">{{ products[$index]?.description }}</p>
+          <p class="text-md font-bold mt-1">$ {{ products[$index]?.price }}</p>
+        </div>
+      </div>
     }
+
+    @if (showControls) {
+      <button (click)="prevImage()" class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-700 rounded-full shadow-md transition-all duration-200 hover:scale-110">
+        ‹
+      </button>
+      <button (click)="nextImage()" class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-700 rounded-full shadow-md transition-all duration-200 hover:scale-110">
+        ›
+      </button>
+    }
+  </div>
+</div>
+<hr>
+<div class="w-full max-w-6xl mx-auto mb-8">
+  <h2 class="text-2xl font-bold mb-4">Ofertas</h2>
+  <div class="relative h-48 md:h-60 lg:h-72 overflow-hidden bg-white rounded-lg shadow-md">
+    @for(image of offerImages; track $index){
+      <div
+        class="absolute inset-0 transition-opacity duration-500 ease-in-out cursor-pointer"
+        [class.opacity-100]="$index === currentIndexOffers"
+        [class.opacity-0]="$index !== currentIndexOffers"
+      >
+        @if (image.loading) {
+          <div class="w-full h-full bg-gray-100 flex items-center justify-center">
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-red-600"></div>
+          </div>
+        } @if (image.loaded) {
+          <img [src]="image.src" [alt]="image.alt" class="w-full h-full object-cover"/>
+        } @if(!image.loaded && !image.loading){
+          <div class="w-full h-full bg-gray-100 flex items-center justify-center"></div>
+        }
+
+        <div class="absolute bottom-0 left-0 right-0 bg-black/50 text-white p-2">
+          @if(offerProducts[$index]?.offer > 0){
+            <span class="bg-red-500 px-2 py-1 rounded text-sm font-bold">{{ offerProducts[$index].offer }}% OFF</span>
+          }
+          <h3 class="text-md font-semibold mt-1">{{ image.alt }}</h3>
+          <p class="text-sm">$ {{ offerProducts[$index]?.price }}</p>
+        </div>
+      </div>
+    }
+
+    <!-- Controles solo para este carrusel -->
+    <button (click)="prevOfferImage()" class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-700 rounded-full shadow-md transition-all duration-200 hover:scale-110">
+      ‹
+    </button>
+    <button (click)="nextOfferImage()" class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-700 rounded-full shadow-md transition-all duration-200 hover:scale-110">
+      ›
+    </button>
   </div>
 </div>
