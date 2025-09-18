@@ -13,3 +13,5 @@ export class SubRayarDirective {
     this.renderer.removeStyle(this.el.nativeElement, 'textDecoration')
   }
 }
+
+
